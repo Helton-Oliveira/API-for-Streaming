@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
-    id: {type: mongoose.Schema.Types.ObjectId},
-    name: {type: String, require: true},
-    url: {type: String, require: true},
+    id: { type: mongoose.Schema.Types.ObjectId },
+    title: { type: String, require: true },
+    drescription: { type: String },
+    url: { type: String, require: true },
     // image: {type: }
 }, {versionKey: false});
 

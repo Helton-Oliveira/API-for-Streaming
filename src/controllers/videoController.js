@@ -11,6 +11,15 @@ class videoControllers {
         }
     }
 
+    static async searchVideoById(req, res) {
+        try {
+            const id = req.params.id;
+            res.status(200).json(await video.findById(id));
+        } catch(error) {
+            res.status(500).json({message: `Video não encontrado.`});
+        }
+    }
+
 }
 
 

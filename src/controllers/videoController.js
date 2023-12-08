@@ -20,6 +20,14 @@ class videoControllers {
         }
     }
 
+    static async createVideo(req, res) {
+        try {
+            res.status(200).json(await video.create(req.body));
+        } catch(error) {
+            res.status(500).json({message: `Video não encontrado.`});
+        }
+    }
+
 }
 
 

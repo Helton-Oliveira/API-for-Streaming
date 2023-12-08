@@ -6,7 +6,7 @@ const conection = await connectToDataBase();
 const app = express();
 
 conection.on("error", (error) => {
-    console.log("Erro de conexão");
+    console.log({ error: error `Erro de conexão` });
 })
 
 conection.once("open", () => {

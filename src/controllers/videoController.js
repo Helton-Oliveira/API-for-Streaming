@@ -37,6 +37,15 @@ class videoControllers {
         }
     }
 
+    static async deleteData(req, res) {
+        try {
+            await video.findByIdAndDelete(req.params.id);
+            res.status(200).json({ message: "Video deletado com sucesso!" });
+        } catch(error) {
+            res.status(500).json({message: `Video não encontrado.`});
+        }
+    }
+
 }
 
 

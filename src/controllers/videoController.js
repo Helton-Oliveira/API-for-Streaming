@@ -39,9 +39,9 @@ class videoControllers {
     static async updateData(req, res, next) {
         try {
             const id = req.params.id ;
-            const update = await video.findByIdAndUpdate(id, body);
+            const update = await video.findByIdAndUpdate(id, req.body);
 
-            if(update !== null && id !== null) {
+            if(update !== null) {
                 res.status(200).json(await video.findById(id));
             } else {
                 next(new NotFound("ID não encontrado"));

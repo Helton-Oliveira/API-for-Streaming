@@ -2,9 +2,19 @@ import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
     id: { type: mongoose.Schema.Types.ObjectId },
-    title: { type: String, required: true, minlength: 3 },
-    description: { type: String, required: true, minlength: 1, maxlength: 5000 },
-    url: { type: String, match: /^(https?|ftp):\/\/(?:www\.)?[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?:\/[^/]+)*\/?$/ ,required: true },
+    title: { 
+        type: String, 
+        required: [true, "O Título é obrigatório!"] 
+    },
+    description: { 
+        type: String, 
+        required: [true, "O campo descrição é obrigatório!"]
+    },
+    url: { 
+        type: String, 
+        required: [true, "O campo URL é obrigatório!"],
+        match: /^(https?|ftp):\/\/(?:www\.)?[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?:\/[^/]+)*\/?$/ , 
+    },
     // image: {type: }
 }, {versionKey: false});
 

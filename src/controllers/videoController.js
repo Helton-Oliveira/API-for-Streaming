@@ -1,12 +1,12 @@
-import video from "../models/Video.js";
+import  video  from "../models/index.js";
 import NotFound from "../errors/NotFound.js";
 
 class videoControllers {
 
     static async showVideos(req, res, next) {
         try {
-           const videos = await video.find({}); 
-           res.status(200).json(videos);
+           const videosList = await video.find({}); 
+           res.status(200).json(videosList);
         } catch(error) {
             next(error);
         }

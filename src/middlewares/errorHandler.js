@@ -11,7 +11,7 @@ function errorHandler(error, req, res, next) {
         new IncorrectRequest().sendReply(res);
 
     } else if(error instanceof mongoose.Error.ValidationError) {
-        new ErrorValidations().sendReply(res);
+        new ErrorValidations(error).sendReply(res);
 
     } else if( error instanceof NotFound) {
         error.sendReply(res);

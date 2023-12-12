@@ -1,48 +1,69 @@
 import video from "../models/Video.js";
+import NotFound from "../errors/NotFound.js";
 
 class videoControllers {
 
-    static async showVideos(req, res) {
+    static async showVideos(req, res, next) {
         try {
            const videos = await video.find({}); 
            res.status(200).json(videos);
         } catch(error) {
-            res.status(500).json({message: `${error.message}`});
+            next(error);
         }
     }
 
-    static async searchVideoById(req, res) {
+    static async searchVideoById(req, res, next) {
         try {
             const id = req.params.id;
-            res.status(200).json(await video.findById(id));
+            const videoFound = await video.findById(id);
+
+            if(videoFound !== null){
+                res.status(200).json(videoFound);
+            } else {
+                next(new NotFound("Id não encontrado!"));
+            }
+
         } catch(error) {
-            res.status(500).json({message: `Video não encontrado.`});
+            next(error);
         }
     }
 
-    static async createVideo(req, res) {
+    static async createVideo(req, res, next) {
         try {
             res.status(200).json(await video.create(req.body));
         } catch(error) {
-            res.status(500).json({message: `Impossível criar video!`});
+            next(error);
         }
     }
 
-    static async updateData(req, res) {
+    static async updateData(req, res, next) {
         try {
-            await video.findByIdAndUpdate(req.params.id, req.body)
-            res.status(200).json(await video.findById(req.params.id));
+            const id = req.params.id ;
+            const update = await video.findByIdAndUpdate(id, body);
+
+            if(update !== null && id !== null) {
+                res.status(200).json(await video.findById(id));
+            } else {
+                next(new NotFound("ID não encontrado"));
+            }
+
         } catch(error) {
-            res.status(500).json({message: `Video não encontrado.`});
+            next(error);
         }
     }
 
-    static async deleteData(req, res) {
+    static async deleteData(req, res, next) {
         try {
-            await video.findByIdAndDelete(req.params.id);
-            res.status(200).json({ message: "Video deletado com sucesso!" });
+            const deleteData = await video.findByIdAndDelete(req.params.id);
+
+            if(deleteData !== null){
+                res.status(200).json({ message: "Video deletado com sucesso!" });
+            } else {
+                next(new NotFound("ID não encontrado!"));
+            }
+
         } catch(error) {
-            res.status(500).json({message: `Video não encontrado.`});
+            next(error);
         }
     }
 

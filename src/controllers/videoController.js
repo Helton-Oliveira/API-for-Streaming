@@ -1,5 +1,6 @@
 import  video  from "../models/index.js";
 import NotFound from "../errors/NotFound.js";
+import BaseError from "../errors/BaseError.js";
 
 class videoControllers {
 
@@ -41,8 +42,14 @@ class videoControllers {
             const id = req.params.id ;
             const update = await video.findByIdAndUpdate(id, req.body);
 
+            let { title, description, url } = req.body;
+
             if(update !== null) {
-                res.status(200).json(await video.findById(id));
+                if(title === "" || description === "" || url === "") {
+                    next(new BaseError("Unauthorized", 401).sendReply(res));
+                } else {
+                    res.status(200).json(await video.findById(id));
+                }
             } else {
                 next(new NotFound("ID não encontrado"));
             }
